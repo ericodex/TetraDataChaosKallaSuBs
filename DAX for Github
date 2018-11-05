@@ -1,0 +1,96 @@
+Por Eric O. Lima - CodexIA :: 05/11/2018 :: 034 :: @alcain
+
+
+                  I  N  T  R  O  D  U  Ç  Ã  O
+
+Linguagem DAX
+
+* Utilizada no POWER BI, POWER PIVOT, e no SSAS Tabular.
+* Utiliza tipos diferentes de estruturas e conceitos, lembrando bases de bancos
+de dados não relacionais.
+* Possui semelhanças com o Excel hardcore (Tabelas Dinâmicas) e nasceu por volta
+ de 2010
+* Não utiliza o conceito de <<linha>> e <<coluna>>
+* Criado para modelos de dados e cálculos de negócios.
+* DAX é uma linguagem funcional e flui com chamadas de função.
+
+
+Assim como as linguagem mais recentes DAX exige indentação como boa prática.
+Não me surpreenderia se o DAX 2.0 ou qualquer outra coisa do tipo utilizar
+indentação como regra de execução.
+
+>    >   >  > >  http://www.daxformatter.com/  < <  <   <    <
+
+o site acima deixa sua função esteticamente foda e indentada automaticamente.
+
+
+---- --- -- -        c o l u n a s    c a l c u l a d a s        - -- --- ----
+
+Características:
+
+1. Colunas Calculadas são por exemplo o resultado da soma ou multiplicação de
+duas ou mais outras colunas.
+
+Ex:
+      Vendas[ML] = Vendas[Preço Loja Virtual] - Vendas[Unidade Custo]
+
+2. Colunas Calculadas podem conter funções condicionais, que são excelentes para
+ corrigir distorções como linhas em branco.
+Ex:
+      Clientes[Idade] = if(
+                Clientes[Data Nasc.] = BLANK();
+                BLANK();
+                YEAR( TODAY() ) - YEAR( Clientes[Data Nasc.])
+                )
+
+      (Se tradicional  if< condição ; verdadeiro ; falso>)
+
+3. Colunas são armazenadas ao atualizar o modelo de dados, não são recomendadas
+ para tabelas muito extensas. Elas utilizam espaço da memória RAM, e são
+ geralmente responsaveis por modelos de dados mais pesados.
+
+4. São calculadas linha por linha.
+
+5. O campo Vendas[Preço] significa, o campo Preço, da tabela Vendas para cada
+ linha que esta implícita, diferente para cada linha.
+
+6. Colunas calculadas não conseguem calcular valores agregando valores
+ individuais. Para isso existe as medidas.
+
+
+---- --- -- -        m e d i d a s    c a l c u l a d a s        - -- --- ----
+
+1. Medidas não são calculadas linha por linha e nem armazenadas. São calculadas
+como conjuntos e ou tabelas, primeiro define o conjunto de valores e depois se
+aplica os cálculos.
+
+2. Medidas não entendem linhas em sua sintaxe. Os campos devem ser contidos
+por expressões maravilhosas.
+
+Ex:
+    Margem de lucro = sum( Sales[Lucro]) / SUM( Sales[Valor Vendas])
+
+3. Como exemplo, cálculo de margem de lucro podem ser colunas calculadas ou
+medidas, mas % de margem de lucro precisa ser uma medida calculada.
+
+4. Medidas não pertencem a uma tabela, portanto é uma convenção evitar utilizar
+nome de tabelas nos campos de medidas.
+
+  [% Margem de lucro] ao invés de Vendas[% Margem de Lucro]
+
+5. É mais fácil de mover uma medida para outra tabela.
+
+
+
+MEDIDAS VS COLUNAS CALCULADAS
+
+* Utilize Colunas Calculadas:
+  - Para filtros e classificações de valores.
+
+* Utilize Medidas:
+  - Calcular percentuais.
+  - Calcular relação, taxas e frequências.
+  - Conjuntos complexos.
+
+Colunas usam RAM, Medidas utilizam CPU e podem ser utilizado em conjunto na msm
+expressão.
