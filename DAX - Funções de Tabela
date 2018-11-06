@@ -1,0 +1,23 @@
+Por Eric O. Lima - CodexIA :: 05/11/2018 :: BRA034 :: @alcain
+Linguagem DAX
+
+                       F U N Ç Õ E S   D E   T A B E L A    
+
+
+1. Funções básicas de tabela.
+Ex:
+    * ALL
+    * DISTINCT
+    * FILTER
+    * RELATEDTABLE
+    * VALUES
+
+    - Os resultados são comumente utilizados em outras funções.
+    - Podem ser utilizados de forma combinada com outras funções para criar
+    expressões ainda mais complexas.
+
+---- --- -- -         t a b e l a s   c a l c u l a d a s         - -- --- ----
+
+  1. Cópia de tabela em DAX:
+  Ex:
+    TB_Copia_Vendas = 'TB_Vendas'
