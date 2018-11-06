@@ -94,3 +94,60 @@ MEDIDAS VS COLUNAS CALCULADAS
 
 Colunas usam RAM, Medidas utilizam CPU e podem ser utilizado em conjunto na msm
 expressão.
+
+---- --- -- -        f u n ç õ e s  d e   a g r e g a ç ã o        - -- --- ----
+
+1. Utilizada em conjuntos de dados. Funções comuns são: SUM, AVERAGE, MIN, MAX.
+ Só utiliza números.
+    - Só trabalha com uma única coluna:
+
+    Correto = SUM( Pedidos[Preço])
+    Falso = SUM( Pedidos[Preço] * Pedidos[Quantidade])
+
+    - Não é possível agregar expressões.
+
+2. Funções de Agregação com <<X>> ou Iterators
+  Ex: SUMX, AVERAGEX, MINX E MAXX
+
+  - As funções de iteração percorrem a tabela e calculam linha a linha a função.
+
+  Veja que na sintaxe abaixo a tabela Vendas é determinada como parâmetro, e 
+  a expressão com duas colunas. 
+  
+  SUMX (
+      Vendas,
+      Vendas[preço] * Vendas[Quantidade]
+      )
+
+  Medidas são amplamente utilizadas para evitar o uso de colunas calculadas.
+
+
+
+  ---- --- -- -        v a r i á v e i s   e m   D A X          - -- --- ----
+
+1. Utilizado para evitar repetição de sub-expressões no código. Variáveis em DAX
+funcionam mais como constantes. 
+Ex1:
+    VAR
+        QntTotal = SUM ( Vendas[Quantidade] )
+    RETURN
+      IF (
+          QntTotal > 1000,
+          QntTotal * 0.95,
+          QntTotal * 1.25
+          )
+  
+
+  ---- --- -- -        f u n ç õ e s   d e   d a t a          - -- --- ----
+
+
+  1. Funções úteis:
+  
+    • DATE, DATEVALUE, DAY, EDATE,
+    • EOMONTH, HOUR, MINUTE,
+    • MONTH, NOW, SECOND, TIME,
+    • TIMEVALUE, TODAY, WEEKDAY,
+    • WEEKNUM, YEAR, YEARFRAC
+
+ As funções de data não tem nada a ver com funções de tempo inteligente.
+ 
